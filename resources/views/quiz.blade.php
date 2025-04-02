@@ -45,15 +45,19 @@
     
     <script>
         $(document).ready(function() {
+            let urlParams = new URLSearchParams(window.location.search);
             let quizId = new URL(window.location.href).pathname.split('/').pop();
+            let count = urlParams.get('count') || ''; // Ambil jumlah soal dari URL jika ada
             let questions = [];
             let currentIndex = 0;
             let correctCount = 0;
             let incorrectCount = 0;
             let incorrectAnswers = [];
-
+    
             function loadQuestions() {
-                $.get(`/quiz/${quizId}/question`, function(data) {
+                let apiUrl = `/quiz/${quizId}/question` + (count ? `?count=${count}` : '');
+                
+                $.get(apiUrl, function(data) {
                     questions = data;
                     currentIndex = 0;
                     correctCount = 0;
@@ -64,7 +68,7 @@
                     Swal.fire('Error', 'Gagal mengambil soal. Pastikan backend berjalan.', 'error');
                 });
             }
-
+    
             function showQuestion() {
                 if (currentIndex < questions.length) {
                     let question = questions[currentIndex];
@@ -75,14 +79,14 @@
                     showSummary();
                 }
             }
-
+    
             $('#quizForm').submit(function(event) {
                 event.preventDefault();
                 let meaning = $('#meaning').val().trim();
                 let reading = $('#reading').val().trim();
                 let correctMeaning = $(this).data('answer-meaning');
                 let correctReading = $(this).data('answer-reading');
-
+    
                 if (meaning === correctMeaning && reading === correctReading) {
                     correctCount++;
                     Swal.fire('Benar!', 'Jawaban kamu benar!', 'success');
@@ -97,12 +101,12 @@
                     });
                     Swal.fire('Salah!', 'Jawaban kamu salah, coba lagi.', 'error');
                 }
-
+    
                 currentIndex++;
                 $('#quizForm')[0].reset();
                 showQuestion();
             });
-
+    
             function showSummary() {
                 $('#quiz-card').hide();
                 $('#quiz-summary').show();
@@ -111,13 +115,14 @@
                 $('#incorrect-list').empty();
                 incorrectAnswers.forEach(ans => {
                     $('#incorrect-list').append(`<li class="list-group-item">
-                        <strong>${ans.kanji}</strong> → Arti: <span class="${ans.userMeaning == ans.correctMeaning ? "text-success" : "text-danger"}">${ans.userMeaning}</span> (Benar: ${ans.correctMeaning}), Cara Baca: <span class="${ans.userReading == ans.correctReading ? "text-success" : "text-danger"}">${ans.userReading}</span> (Benar: ${ans.correctReading})
+                        <strong>${ans.kanji}</strong> → Cara Baca: <span class="${ans.userReading == ans.correctReading ? "text-success" : "text-danger"}">${ans.userReading}</span> (Benar: ${ans.correctReading}), Arti: <span class="${ans.userMeaning == ans.correctMeaning ? "text-success" : "text-danger"}">${ans.userMeaning}</span> (Benar: ${ans.correctMeaning})
                     </li>`);
                 });
             }
-
+    
             loadQuestions();
         });
     </script>
+    
 </body>
 </html>
