@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Soal Kuis</h5>
                         <h1 id="kanji-question" class="text-center" style="font-size: 52px;">Memuat soal...</h1>
-                        <form id="quizForm">
+                        <form id="quizForm" autocomplete="off">
                             <div class="mb-3">
                                 <label for="reading" class="form-label">Cara Baca:</label>
                                 <input type="text" class="form-control" id="reading" required>
@@ -56,6 +56,8 @@
             let correctCount = 0;
             let incorrectCount = 0;
             let incorrectAnswers = [];
+
+            $('#reading').focus();
     
             function loadQuestions() {
                 let apiUrl = `/quiz/${quizId}/question` + (count ? `?count=${count}` : '');
@@ -89,10 +91,25 @@
                 let reading = $('#reading').val().trim();
                 let correctMeaning = $(this).data('answer-meaning');
                 let correctReading = $(this).data('answer-reading');
-    
+
+                // Cek apakah jawaban benar atau salah
                 if (meaning === correctMeaning && reading === correctReading) {
                     correctCount++;
-                    Swal.fire('Benar!', 'Jawaban kamu benar!', 'success');
+                    Swal.fire({
+                        title: 'Benar!',
+                        text: 'Jawaban kamu benar!',
+                        icon: 'success',
+                        timer: 1000,
+                        allowEnterKey: true // Menangani Enter
+                    }).then(() => {
+                        // Reset form setelah SweetAlert selesai
+                        $('#quizForm')[0].reset();
+                        currentIndex++;
+                        showQuestion(); // Menampilkan soal berikutnya
+                        setTimeout(() => {
+                            $('#reading').focus(); // Fokus kembali ke input reading
+                        }, 500);
+                    });
                 } else {
                     incorrectCount++;
                     incorrectAnswers.push({
@@ -102,14 +119,24 @@
                         userMeaning: meaning,
                         userReading: reading
                     });
-                    Swal.fire('Salah!', 'Jawaban kamu salah, coba lagi.', 'error');
+                    Swal.fire({
+                        title: 'Salah!',
+                        text: 'Jawaban kamu salah.',
+                        icon: 'error',
+                        timer: 1000,
+                        allowEnterKey: true // Menangani Enter
+                    }).then(() => {
+                        // Reset form setelah SweetAlert selesai
+                        $('#quizForm')[0].reset();
+                        currentIndex++;
+                        showQuestion(); // Menampilkan soal berikutnya
+                        setTimeout(() => {
+                            $('#reading').focus(); // Fokus kembali ke input reading
+                        }, 500);
+                    });
                 }
-    
-                currentIndex++;
-                $('#quizForm')[0].reset();
-                showQuestion();
             });
-    
+
             function showSummary() {
                 $('#quiz-card').hide();
                 $('#quiz-summary').show();

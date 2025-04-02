@@ -11,7 +11,7 @@ class QuestionController extends Controller
     public function index($id)
     {
         $quiz = Ordering::findOrFail($id);
-        $questions = QuizQuestion::where('ordering', $id)->get();
+        $questions = QuizQuestion::where('ordering', $id)->paginate(10);
         
         return view('questions.index', compact('quiz', 'questions'));
     }

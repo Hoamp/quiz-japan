@@ -20,6 +20,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Kanji</th>
                     <th>Arti</th>
                     <th>Cara Baca</th>
@@ -29,6 +30,9 @@
             <tbody id="questionList">
                 @foreach ($questions as $question)
                     <tr data-id="{{ $question->id }}">
+                        <td class="no">
+                            {{ ($questions->currentPage() - 1) * $questions->perPage() + $loop->iteration }}
+                        </td>
                         <td class="kanji">{{ $question->kanji }}</td>
                         <td class="meaning">{{ $question->meaning }}</td>
                         <td class="reading">{{ $question->reading }}</td>
@@ -39,6 +43,9 @@
                     </tr>
                 @endforeach
             </tbody>
+            <div class="d-flex">
+                {!! $questions->links() !!}
+            </div>
         </table>
     </div>
 

@@ -20,6 +20,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Nama</th>
                     <th>Deskripsi</th>
                     <th>Aksi</th>
@@ -28,6 +29,10 @@
             <tbody id="quizList">
                 @foreach ($orderings as $order)
                     <tr data-id="{{ $order->id }}">
+                        <td class="no">
+                            {{ ($orderings->currentPage() - 1) * $orderings->perPage() + $loop->iteration }}
+                        </td>
+                        
                         <td class="nama">{{ $order->nama }}</td>
                         <td class="deskripsi">{{ $order->deskripsi }}</td>
                         <td>
@@ -38,6 +43,10 @@
                     </tr>
                 @endforeach
             </tbody>
+        </tbody>
+        <div class="d-flex">
+            {!! $orderings->links() !!}
+        </div>
         </table>
     </div>
 

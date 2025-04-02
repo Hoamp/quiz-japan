@@ -9,7 +9,7 @@ class OrderingController extends Controller
 { 
     public function index()
     {
-        $orderings = Ordering::all();
+        $orderings = Ordering::paginate(10);
         return view('ordering.index', compact('orderings'));
     }
 
