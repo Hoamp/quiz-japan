@@ -24,7 +24,12 @@ class QuestionController extends Controller
             'reading' => 'required|string|max:255',
         ]);
 
-        QuizQuestion::create($request->all());
+        QuizQuestion::create([
+            'ordering' => strtolower($request->ordering),
+            'kanji' => strtolower($request->kanji),
+            'meaning' => strtolower($request->meaning),
+            'reading' => strtolower($request->reading),
+        ]);    
 
         return response()->json(['success' => 'Soal berhasil ditambahkan']);
     }

@@ -7,15 +7,15 @@ use App\Models\QuizQuestion;
 class QuizQuestionSeeder extends Seeder {
     public function run(): void {
         QuizQuestion::insert([
-            ['kanji' => '日', 'meaning' => 'Matahari', 'reading' => 'nichi'],
-            ['kanji' => '月', 'meaning' => 'Bulan', 'reading' => 'getsu'],
-            ['kanji' => '火', 'meaning' => 'Api', 'reading' => 'ka'],
-            ['kanji' => '水', 'meaning' => 'Air', 'reading' => 'sui'],
-            ['kanji' => '木', 'meaning' => 'Pohon', 'reading' => 'moku'],
-            ['kanji' => '金', 'meaning' => 'Emas', 'reading' => 'kin'],
-            ['kanji' => '土', 'meaning' => 'Tanah', 'reading' => 'do'],
-            ['kanji' => '空', 'meaning' => 'Langit', 'reading' => 'sora'],
-            ['kanji' => '山', 'meaning' => 'Gunung', 'reading' => 'yama'],
+            ['kanji' => '日', 'meaning' => 'matahari', 'reading' => 'nichi'],
+            ['kanji' => '月', 'meaning' => 'bulan', 'reading' => 'getsu'],
+            ['kanji' => '火', 'meaning' => 'api', 'reading' => 'ka'],
+            ['kanji' => '水', 'meaning' => 'air', 'reading' => 'sui'],
+            ['kanji' => '木', 'meaning' => 'pohon', 'reading' => 'moku'],
+            ['kanji' => '金', 'meaning' => 'emas', 'reading' => 'kin'],
+            ['kanji' => '土', 'meaning' => 'tanah', 'reading' => 'do'],
+            ['kanji' => '空', 'meaning' => 'langit', 'reading' => 'sora'],
+            ['kanji' => '山', 'meaning' => 'gunung', 'reading' => 'yama'],
         ]);
     }
 }

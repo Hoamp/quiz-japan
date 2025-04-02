@@ -16,18 +16,18 @@
             <div class="card-body">
                 <h5 class="card-title">Tambah Soal</h5>
                 <form id="addQuestionForm">
-                    <input type="hidden" id="ordering_id" value="{{ $quiz->id }}">
+                    <input type="hidden" id="ordering" value="{{ $quiz->id }}">
                     <div class="mb-3">
                         <label for="kanji" class="form-label">Kanji:</label>
                         <input type="text" class="form-control" id="kanji" required>
                     </div>
                     <div class="mb-3">
-                        <label for="meaning" class="form-label">Arti:</label>
-                        <input type="text" class="form-control" id="meaning" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="reading" class="form-label">Cara Baca:</label>
                         <input type="text" class="form-control" id="reading" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meaning" class="form-label">Arti:</label>
+                        <input type="text" class="form-control" id="meaning" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
@@ -66,7 +66,7 @@
             $('#addQuestionForm').submit(function (event) {
                 event.preventDefault();
                 $.post('/questions', {
-                    ordering_id: $('#ordering_id').val(),
+                    ordering: $('#ordering').val(),
                     kanji: $('#kanji').val(),
                     meaning: $('#meaning').val(),
                     reading: $('#reading').val(),
