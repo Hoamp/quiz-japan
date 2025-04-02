@@ -39,6 +39,7 @@ Route::delete('/ordering/{id}', [OrderingController::class, 'destroy'])->name('o
 Route::get('/ordering/{id}/questions', [QuestionController::class, 'index'])->name('questions.index');
 Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+Route::put('/questions/{id}', [QuestionController::class, 'update'])->name('questions.update');
 
 Route::middleware('auth')->group(function () {
     Route::post('/quiz/attempt', [QuizAttemptController::class, 'store'])->name('quiz.attempt.store');

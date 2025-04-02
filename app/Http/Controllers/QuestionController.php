@@ -34,6 +34,21 @@ class QuestionController extends Controller
         return response()->json(['success' => 'Soal berhasil ditambahkan']);
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'kanji' => 'required|string|max:255',
+            'meaning' => 'string',
+            'reading' => 'string',
+        ]);
+
+        $quiz = QuizQuestion::findOrFail($id);
+        $quiz->update($request->all());
+
+        return response()->json(['success' => 'Kuis berhasil diperbarui!']);
+    }
+
+
     public function destroy($id)
     {
         QuizQuestion::findOrFail($id)->delete();
