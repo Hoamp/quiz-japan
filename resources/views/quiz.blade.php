@@ -18,7 +18,7 @@
                 <div class="card" id="quiz-card">
                     <div class="card-body">
                         <h5 class="card-title">Soal Kuis</h5>
-                        <p id="kanji-question" class="fs-3 text-center">Memuat soal...</p>
+                        <h1 id="kanji-question" class="text-center" style="font-size: 52px;">Memuat soal...</h1>
                         <form id="quizForm">
                             <div class="mb-3">
                                 <label for="reading" class="form-label">Cara Baca:</label>
@@ -40,6 +40,8 @@
                     <ul id="incorrect-list" class="list-group"></ul>
                     <a href="/dashboard" class="btn btn-primary w-100 mt-3">Kembali ke Dashboard</a>
                 </div>
+                
+                <a href="{{ route('dashboard') }}" class="btn btn-danger mt-5">Kembali</a>
             </div>
         </div>
     </div>
