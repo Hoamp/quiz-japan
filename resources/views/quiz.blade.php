@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kuis Kanji</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -118,8 +119,25 @@
                         <strong>${ans.kanji}</strong> → Cara Baca: <span class="${ans.userReading == ans.correctReading ? "text-success" : "text-danger"}">${ans.userReading}</span> (Benar: ${ans.correctReading}), Arti: <span class="${ans.userMeaning == ans.correctMeaning ? "text-success" : "text-danger"}">${ans.userMeaning}</span> (Benar: ${ans.correctMeaning})
                     </li>`);
                 });
+
+                
+                // Simpan riwayat penyelesaian kuis
+                saveQuizAttempt(quizId, correctCount, incorrectCount);
             }
-    
+
+            function saveQuizAttempt(orderingId, correct, incorrect) {
+                $.post('/quiz/attempt', {
+                    ordering_id: orderingId,
+                    correct_answers: correct,
+                    incorrect_answers: incorrect,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }, function(response) {
+                    console.log(response.success);
+                }).fail(function() {
+                    console.error("Gagal menyimpan riwayat kuis.");
+                });
+            }
+
             loadQuestions();
         });
     </script>

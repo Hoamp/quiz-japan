@@ -12,6 +12,8 @@
     <div class="container mt-5">
         <h1 class="text-center">Daftar Kuis Kanji Jepang</h1>
         <a href="{{ route('ordering.index') }}" class="btn btn-success">Manajemen kuis</a>
+        <a href="{{ route('quiz.history') }}" class="btn btn-info">Riwayat Kuis</a>
+
         <div class="row justify-content-center mt-4">
             <div class="col-md-8">
                 <div class="card">
@@ -82,7 +84,7 @@
                 let questionMode = $('input[name="question_count"]:checked').val();
                 let questionCount = $('#questionCount').val();
 
-                let url = `/quiz/${quizId}`;
+                let url = `/quiz/show/${quizId}`;
                 if (questionMode === 'some' && questionCount) {
                     url += `?count=${questionCount}`;
                 }

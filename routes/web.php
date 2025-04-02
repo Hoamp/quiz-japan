@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/quiz/{ordering}/question', [QuizController::class, 'getQuestion']);
 
-Route::get('/quiz/{id}', function ($id) {
+Route::get('/quiz/show/{id}', function ($id) {
     return view('quiz', ['quizId' => $id]);
 });
 
@@ -38,3 +39,11 @@ Route::delete('/ordering/{id}', [OrderingController::class, 'destroy'])->name('o
 Route::get('/ordering/{id}/questions', [QuestionController::class, 'index'])->name('questions.index');
 Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/quiz/attempt', [QuizAttemptController::class, 'store'])->name('quiz.attempt.store');
+    Route::get('/quiz/history', [QuizAttemptController::class, 'index'])->name('quiz.history');
+
+    Route::get('/quiz/history/data', [QuizController::class, 'historyData']);
+
+});
